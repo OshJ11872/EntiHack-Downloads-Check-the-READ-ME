@@ -225,22 +225,6 @@ Register a free account at abuseipdb.com, get your key, add it below the
 placeholder comment. Without a key, this feature is skipped everywhere and
 says so plainly.
 
-## Analyzing a suspicious email (Rubiscout)
-
-Standalone tool, separate from the honeypot/blocking system — analyzes an
-email you paste in, using [Rubiscout](https://rubiscout.com)'s real API
-(SPF/DKIM/DMARC checks, IP reputation, AI-generated verdict).
-
-```bash
-cp rubiscout_key.txt.example rubiscout_key.txt
-```
-Get a free key at rubiscout.com/dashboard, add it below the placeholder
-comment, then:
-```bash
-python3 rubiscout.py suspicious.eml
-```
-Rate limits (Rubiscout's own): 60 requests/hour, 200/day per key.
-
 ## Legal notes (not legal advice — verify for your situation)
 
 - Running this on infrastructure you own/control and logging incoming
@@ -265,4 +249,4 @@ This project is licensed under the **Creative Commons Attribution-NonCommercial 
 See the full [LICENSE](LICENSE) file for details.
 
 You should credit this like this:
-"This project uses code from [Your Name/Username]'s [Repository Name], which is licensed under CC BY-NC 4.0."
+"This project uses code from OshJ11872's EntiHack-Downloads-Check-The-README , which is licensed under CC BY-NC 4.0."
