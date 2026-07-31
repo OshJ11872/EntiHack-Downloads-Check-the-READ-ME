@@ -1,5 +1,7 @@
 # Entihack (prototype)
 
+> **If you're on the original v1 build (no `update.py` in your folder), it's no longer supported** — it included a feature that's since been removed. You can still use it as-is, but a one-time manual upgrade is strongly recommended. See the [Upgrading wiki page](../../wiki/Upgrading).
+
 A local defensive-security toolkit: honeypot capture + heuristic attacker
 profiling + IP intel + a deception "maze" (tarpit) + a dashboard, with an
 optional AI plain-language summary of each captured session.
@@ -38,6 +40,36 @@ no required format, length, or character set.
 
 Everything below this section is the manual/terminal-based version of the
 same steps.
+
+## Updating without losing your data
+
+Swapping `entihack_viewer.html` alone is always safe — it's standalone and
+never touches your data. Extracting a new zip into your existing folder is
+also safe, since every zip excludes `data/entihack.db`, `exports/`, and all
+key files. The only real risk is deleting your whole folder before
+updating. Protect against that:
+
+```bash
+python3 backup.py create
+```
+If something goes wrong:
+```bash
+python3 backup.py restore backups/entihack_backup_<timestamp>.zip
+```
+A backup file contains your API keys in plain text — treat it like a
+password file.
+
+## Updating automatically and pre-flight diagnostics
+
+```bash
+python3 update.py --check-only    # see what would change
+python3 update.py                 # backs up, downloads, applies the update
+python3 diagnostics.py            # health check before starting anything
+```
+`update.py` downloads the current `entihack.zip` from this repo and
+extracts it into your existing folder — same process as above, automated.
+`diagnostics.py` checks Python version, dependencies, port conflicts, and
+database health, and is wired into all three launchers automatically.
 
 ## Running this on Google Cloud Platform (GCP) instead of your own machine
 
@@ -85,6 +117,9 @@ in essentially every jurisdiction (e.g. the CFAA in the US).
 | `ai_explainer.py` | Optional: calls the Anthropic API to summarize a session in plain English |
 | `blocker.py` | Auto-blocks repeat offenders — refuses their connections, never contacts them |
 | `export.py` | Exports every captured attack + the blocklist into a portable JSON/CSV report |
+| `backup.py` | Backs up/restores your data and keys before updating |
+| `update.py` | Downloads and applies the latest version, data/keys untouched |
+| `diagnostics.py` | Pre-flight health check, runs automatically before startup |
 | `entihack_viewer.html` | Standalone app — file-upload mode, or live mode with a real Block button |
 | `api.py` | The real backend for live mode: JSON API + authenticated block/unblock endpoints |
 | `Start_Entihack.command` / `.bat` | Double-click launchers (Mac / Windows) |
@@ -92,8 +127,6 @@ in essentially every jurisdiction (e.g. the CFAA in the US).
 | `Stop_Entihack.command` / `.bat` | Double-click to stop everything |
 | `api_key.txt.example` | Template for your API key |
 | `abuseipdb_key.txt.example` | Template for your optional AbuseIPDB key |
-| `rubiscout.py` | Standalone tool: analyzes a suspicious email via the real Rubiscout API |
-| `rubiscout_key.txt.example` | Template for your optional Rubiscout key |
 
 ## Setup
 
@@ -249,4 +282,4 @@ This project is licensed under the **Creative Commons Attribution-NonCommercial 
 See the full [LICENSE](LICENSE) file for details.
 
 You should credit this like this:
-"This project uses code from OshJ11872's EntiHack-Downloads-Check-The-README , which is licensed under CC BY-NC 4.0."
+"This project uses code from OshJ11872's Entihack-Downloads-Check-The-README, which is licensed under CC BY-NC 4.0."
